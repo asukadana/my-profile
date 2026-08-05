@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <h2 class="flex justify-center items-center font-bold text-gray-700 p-4">BMI計算ツール</h2>
+    <!-- 身長入力欄 -->
+    <div class="flex justify-center items-center font-medium p-4">
+        <label class="block text-sm text-gray-700 p-4" for="tall">身長</label>
+        <input type="number" id="tall" placeholder="例：150">
+    </div>
+    <!-- 体重入力欄 -->
+    <div class="flex justify-center items-center font-medium p-4">
+        <label class="block text-sm text-gray-700 p-4" for="weight">体重</label>
+        <input type="number" id="weight" placeholder="例：40">
+    </div>
+    <!-- 計算するボタン -->
+    <div class="flex justify-center items-center p-4">
+        <button id="calcBtn" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">計算する</button>
+    </div>
+    <!-- 結果表示欄 -->
+    <div class="flex justify-center items-center font-semibold p-4">
+        <p>BMI:</p>
+        <p id="result" class="text-center">初期数値</p>
+    </div>
+    <script>
+        function calcBmi(height,weight){
+            const heightM = height/100;
+            return weight/(heightM*heightM);
+        }
+        function getJudgment(bmi){
+            if(bmi < 18.5){
+                return "痩せ型";
+            }
+            else if(bmi<25){
+                return"普通";
+            }
+            else {
+                return "肥満"; 
+            }
+        }
+        const button = document.querySelector("#calcBtn");
+        const result = document.querySelector("#result");
+        button.addEventListener("click",()=>{
+            const height = Number(document.querySelector("#tall").value);
+            const weight = Number(document.querySelector("#weight").value);
+            if(height <= 0 || weight <= 0){
+                result.textContent ="身長と体重をゼロより大きい値で入力してください";
+                return;
+            }
+            const bmi = calcBmi(height, weight);
+            const judgment = getJudgment(bmi);
+            result.textContent = "BMI: "+bmi.toFixed(1)+" ("+judgment+")";
+        });
+    </script>
+    
+</body>
+</html>
+
+<!-- 次やること：week06-2を見ながら入力欄の枠の表示クラスをメモとりながらかくぞ -->
+
+<!-- コメント. 困ったこと：ボタンの中央揃え：ボタンのクラスにflexとか書いてもそれはボタンの中の文字を中央揃えにするやつやから、divで括ってそこに書かんといけんかった。 -->
