@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メンバーリスト</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+<h1 class="flex justify-center items-center text-2xl font-bold text-slate-900">
+    メンバーリスト
+</h1>
+
+<button id="sortButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    名前順
+</button>
+
+<header class="border-b border-sky-100 bg-white/80 backdrop-blur">
+    <div class="mx-auto flex max-w-4xl flex-col gap-4 px-6 py-8 sm:flex-row sm:items-center sm:justify-between">
+    </div>
+</header>
+
+<main>
+    <div id="memberCards" class="grid gap-4 sm:grid-cols-2"></div>
+</main>
+
+<script>
+
+const members = [
+    {name:"ドラえもん", role:"猫型ロボット", comment:"僕ドラえもん"},
+    {name:"のび太", role:"小学生", comment:"一番ダメなことは自分なんかと思うことさ"},
+    {name:"しずか", role:"小学生", comment:"時々 理屈に合わないことするのが人間なのよ"},
+    {name:"スネ夫", role:"小学生", comment:"うちのパパ、えらいんだぞ。社長だぞ。"},
+    {name:"剛田", role:"小学生", comment:"お前のものは俺のもの、俺のものも俺のもの"},
+];
+
+const memberCards = document.getElementById("memberCards");
+
+
+function renderMembers(members){
+
+    memberCards.innerHTML = "";
+
+    members.forEach(function(member){
+
+        const card = document.createElement("div");
+
+        card.className = "rounded-xl bg-white p-6 shadow-sm";
+
+        card.innerHTML = `
+            <h2 class="text-xl font-bold text-slate-900">${member.name}</h2>
+            <p class="mt-2 text-slate-500">${member.role}</p>
+            <p class="mt-2 text-slate-600">${member.comment}</p>
+        `;
+
+        memberCards.appendChild(card);
+    });
+}
+
+
+renderMembers(members);
+
+
+const sortButton = document.getElementById("sortButton");
+
+sortButton.addEventListener("click", function(){
+
+    const createdMembers = members.slice().sort(function(a, b){
+        return a.name.localeCompare(b.name, "ja");
+    });
+
+    renderMembers(createdMembers);
+
+});
+
+</script>
+
+</body>
+</html>
